@@ -1,7 +1,13 @@
 import React from 'react';
 
-export const BalanceDisplay = ({ selectedCurrency, getConvertedBalance }) => {
-  const formatNumber = (num) => {
+export const BalanceDisplay = ({ selectedCurrency, selectedBalance }) => {
+  const formatNumber = (num, currency) => {
+    if (['BTC', 'ETH', 'LTC'].includes(currency)) {
+      return num.toLocaleString('en-US', {
+        minimumFractionDigits: 6,
+        maximumFractionDigits: 6,
+      });
+    }
     return num.toLocaleString('en-US', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
@@ -11,8 +17,10 @@ export const BalanceDisplay = ({ selectedCurrency, getConvertedBalance }) => {
   return (
     <span className="text-4xl font-bold text-gray-900">
       {selectedCurrency === 'USD'
-        ? '$ ' + formatNumber(getConvertedBalance())
-        : formatNumber(getConvertedBalance()) + ' ' + selectedCurrency}
+        ? '$ ' + formatNumber(selectedBalance, selectedCurrency)
+        : formatNumber(selectedBalance, selectedCurrency) +
+          ' ' +
+          selectedCurrency}
     </span>
   );
 };
