@@ -1,27 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SUPPORTED_CURRENCIES } from '../../constants/currencies';
-import { fetchRates } from '../../redux/slices/ratesSlice';
 import { BalanceDisplay } from './components/BalanceDisplay';
 
 export const TotalBalance = () => {
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
 
-  const dispatch = useDispatch();
-  const balance = useSelector((state) => state.wallet.balance);
-  const rates = useSelector((state) => state.rates.rates);
+  const balances = useSelector((state) => state.wallet.balance);
 
-  useEffect(() => {
-    dispatch(fetchRates());
-  }, [dispatch]);
-
-  const getConvertedBalance = () => {
-    if (selectedCurrency === 'USD') return balance;
-
-    const rate = rates && rates[selectedCurrency.toLocaleLowerCase()];
-    if (!rate) return balance;
-    return balance * rate;
-  };
+  const selectedBalance = balances[selectedCurrency.toLowerCase()];
 
   return (
     <>
@@ -52,7 +39,7 @@ export const TotalBalance = () => {
             <div className="flex items-baseline mt-1">
               <BalanceDisplay
                 selectedCurrency={selectedCurrency}
-                getConvertedBalance={getConvertedBalance}
+                selectedBalance={selectedBalance}
               />
             </div>
             <p className="text-sm text-gray-500 mt-1">
