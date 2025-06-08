@@ -36,7 +36,8 @@ const ratesSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchRates.fulfilled, (state, action) => {
-        (state.status = 'succeeded'), (state.rates = action.payload);
+        (state.status = 'succeeded'),
+          (state.rates = { ...action.payload, usd: 1 });
       })
       .addCase(fetchRates.rejected, (state) => {
         (state.status = 'failed'), (state.rates = {});
