@@ -4,8 +4,8 @@ export const BalanceDisplay = ({ selectedCurrency, selectedBalance }) => {
   const formatNumber = (num, currency) => {
     if (['BTC', 'ETH', 'LTC'].includes(currency)) {
       return num.toLocaleString('en-US', {
-        minimumFractionDigits: 6,
-        maximumFractionDigits: 6,
+        minimumFractionDigits: 8,
+        maximumFractionDigits: 8,
       });
     }
     return num.toLocaleString('en-US', {
