@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SUPPORTED_CURRENCIES } from '../../constants/currencies';
+import { setSelectedCurrency } from '../../redux/slices/walletSlice';
 import { BalanceDisplay } from './components/BalanceDisplay';
 
 export const TotalBalance = () => {
-  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const dispatch = useDispatch();
 
   const balances = useSelector((state) => state.wallet.balance);
+  const selectedCurrency =
+    useSelector((state) => state.wallet.selectedCurrency) || 'USD';
 
   const selectedBalance = balances[selectedCurrency.toLowerCase()];
 
@@ -23,7 +26,7 @@ export const TotalBalance = () => {
                 {SUPPORTED_CURRENCIES.map((currency) => (
                   <button
                     key={currency}
-                    onClick={() => setSelectedCurrency(currency)}
+                    onClick={() => dispatch(setSelectedCurrency(currency))}
                     className={`!rounded-button whitespace-nowrap px-2 py-0.5 text-xs rounded
                     ${
                       selectedCurrency === currency

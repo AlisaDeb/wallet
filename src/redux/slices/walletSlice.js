@@ -9,13 +9,18 @@ const initialState = {
     eth: 1.2277522,
     ltc: 19.4622044,
   },
+  selectedCurrency: 'USD',
 };
 
 const walletSlice = createSlice({
   name: 'wallet',
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedCurrency(state, action) {
+      state.selectedCurrency = action.payload;
+    },
+  },
 });
 
-// export const { setBalance } = walletSlice.actions;
+export const { setSelectedCurrency } = walletSlice.actions;
 export default walletSlice.reducer;
