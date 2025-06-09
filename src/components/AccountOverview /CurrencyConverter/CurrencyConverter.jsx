@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSelectCurrencies } from '../../../redux/slices/currenciesSlice';
 import { fetchRates } from '../../../redux/slices/ratesSlice';
+import { formatAmount } from '../../../utils/formatting';
 import { CurrencyInputBlock } from './components/CurrencyInputBlock';
 import { CurrencyQuickSelect } from './components/CurrencyQuickSelect';
 
@@ -48,15 +49,15 @@ export const CurrencyConverter = () => {
       if (fromAmount === '') {
         setToAmount('');
       } else {
-        const result = (parseFloat(fromAmount) * rate).toFixed(2);
-        setToAmount(result);
+        const result = parseFloat(fromAmount) * rate;
+        setToAmount(formatAmount(result, toCurrency));
       }
     } else if (activeInput === 'to') {
       if (toAmount === '') {
         setFromAmount('');
       } else {
-        const result = (parseFloat(toAmount) / rate).toFixed(2);
-        setFromAmount(result);
+        const result = parseFloat(toAmount) / rate;
+        setFromAmount(formatAmount(result, fromCurrency));
       }
     }
   }, [fromAmount, toAmount, fromCurrency, toCurrency, activeInput, rates]);
@@ -68,6 +69,10 @@ export const CurrencyConverter = () => {
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
   };
+
+  const rateOneFromTo =
+    (1 / rates[fromCurrency.toLowerCase()]) * rates[toCurrency.toLowerCase()];
+  const formattedRateOneFromTo = formatAmount(rateOneFromTo, toCurrency);
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
@@ -109,12 +114,7 @@ export const CurrencyConverter = () => {
       </div>
       <div className="mt-4 text-center text-sm text-gray-500">
         <p>
-          1 {fromCurrency} ={' '}
-          {(
-            (1 / rates[fromCurrency.toLowerCase()]) *
-            rates[toCurrency.toLowerCase()]
-          ).toFixed(4)}{' '}
-          {toCurrency}
+          1 {fromCurrency} = {formattedRateOneFromTo} {toCurrency}
         </p>
       </div>
       <div className="mt-4 flex justify-center">
