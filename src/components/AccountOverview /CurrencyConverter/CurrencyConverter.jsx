@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSelectCurrencies } from '../../../redux/slices/currenciesSlice';
 import { fetchRates } from '../../../redux/slices/ratesSlice';
+import { setSelectedCurrency } from '../../../redux/slices/walletSlice';
 import { formatAmount } from '../../../utils/formatting';
 import { CurrencyInputBlock } from './components/CurrencyInputBlock';
 import { CurrencyQuickSelect } from './components/CurrencyQuickSelect';
@@ -23,6 +24,10 @@ export const CurrencyConverter = () => {
     dispatch(fetchSelectCurrencies());
     dispatch(fetchRates());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(setSelectedCurrency(fromCurrency));
+  }, [fromCurrency, dispatch]);
 
   const getExchangeRate = (from, to) => {
     if (from === to) return 1;
