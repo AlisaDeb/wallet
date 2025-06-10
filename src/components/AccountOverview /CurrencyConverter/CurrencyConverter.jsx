@@ -5,6 +5,7 @@ import { fetchSelectCurrencies } from '../../../redux/slices/currenciesSlice';
 import { fetchRates } from '../../../redux/slices/ratesSlice';
 import { setSelectedCurrency } from '../../../redux/slices/walletSlice';
 import { formatAmount } from '../../../utils/formatting';
+import { Modal } from '../../UI/Modal';
 import { CurrencyInputBlock } from './components/CurrencyInputBlock';
 import { CurrencyQuickSelect } from './components/CurrencyQuickSelect';
 
@@ -14,6 +15,7 @@ export const CurrencyConverter = () => {
   const [fromCurrency, setFromCurrency] = useState('USD');
   const [toCurrency, setToCurrency] = useState('EUR');
   const [activeInput, setActiveInput] = useState('from');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -81,6 +83,17 @@ export const CurrencyConverter = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          fromAmount={fromAmount}
+          fromCurrency={fromCurrency}
+          toAmount={toAmount}
+          toCurrency={toCurrency}
+          rate={formattedRateOneFromTo}
+        />
+      )}
       <h2 className="text-xl font-semibold text-gray-800 mb-4">
         {' '}
         Currency Converter
@@ -123,7 +136,10 @@ export const CurrencyConverter = () => {
         </p>
       </div>
       <div className="mt-4 flex justify-center">
-        <button className="!rounded-button whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg flex items-center cursor-pointer">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="!rounded-button whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg flex items-center cursor-pointer"
+        >
           <ArrowsRightLeftIcon className="w-5 h-5 mr-2" /> Convert & Transfer
         </button>
       </div>
