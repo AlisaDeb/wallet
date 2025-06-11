@@ -1,6 +1,7 @@
 import { ArrowsRightLeftIcon } from '@heroicons/react/24/solid';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { fetchSelectCurrencies } from '../../../redux/slices/currenciesSlice';
 import { fetchRates } from '../../../redux/slices/ratesSlice';
 import { setSelectedCurrency } from '../../../redux/slices/walletSlice';
@@ -21,6 +22,7 @@ export const CurrencyConverter = () => {
 
   const currencies = useSelector((state) => state.currencies.items);
   const { rates, base } = useSelector((state) => state.rates);
+  const balance = useSelector((state) => state.wallet.balance);
 
   useEffect(() => {
     dispatch(fetchSelectCurrencies());
@@ -81,6 +83,37 @@ export const CurrencyConverter = () => {
     (1 / rates[fromCurrency.toLowerCase()]) * rates[toCurrency.toLowerCase()];
   const formattedRateOneFromTo = formatAmount(rateOneFromTo, toCurrency);
 
+  const isValidConversion = () => {
+    const availableBalance = balance[fromCurrency.toLowerCase()];
+    const amount = parseFloat(fromAmount);
+
+    return (
+      fromCurrency !== toCurrency &&
+      !isNaN(amount) &&
+      amount > 0 &&
+      amount <= availableBalance
+    );
+  };
+
+  const handleConvertClick = () => {
+    const availableBalance = balance[fromCurrency.toLowerCase()];
+    const amount = parseFloat(fromAmount);
+
+    if (!isValidConversion()) {
+      if (fromCurrency === toCurrency) {
+        toast.warning('Cannot convert to the same currency');
+      } else if (isNaN(amount)) {
+        toast.error('Please enter a valid number');
+      } else if (amount <= 0) {
+        toast.error('Amount must be greater than zero');
+      } else if (amount >= availableBalance) {
+        toast.error('Not enough balance to complete the transaction');
+      }
+      return;
+    }
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
       {isModalOpen && (
@@ -137,7 +170,7 @@ export const CurrencyConverter = () => {
       </div>
       <div className="mt-4 flex justify-center">
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={handleConvertClick}
           className="!rounded-button whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg flex items-center cursor-pointer"
         >
           <ArrowsRightLeftIcon className="w-5 h-5 mr-2" /> Convert & Transfer

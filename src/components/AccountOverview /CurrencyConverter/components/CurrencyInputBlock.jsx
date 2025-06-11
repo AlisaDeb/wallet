@@ -9,6 +9,13 @@ export const CurrencyInputBlock = ({
   setCurrency,
   onFocus,
 }) => {
+  const handleChange = (e) => {
+    const val = e.target.value;
+
+    if (val === '' || parseFloat(val) >= 0) {
+      setAmount(e.target.value);
+    }
+  };
   return (
     <>
       {' '}
@@ -19,8 +26,9 @@ export const CurrencyInputBlock = ({
         <div className="flex w-full rounded-lg overflow-hidden border border-gray-300 focus-within:ring-2 focus-within:ring-indigo-500">
           <input
             type="number"
+            min="0"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={handleChange}
             onFocus={onFocus}
             className="flex-grow w-full px-4 py-3 outline-none border-r-0"
           />
