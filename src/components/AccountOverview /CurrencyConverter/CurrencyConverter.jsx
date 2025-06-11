@@ -143,7 +143,9 @@ export const CurrencyConverter = () => {
           <ArrowsRightLeftIcon className="w-5 h-5 mr-2" /> Convert & Transfer
         </button>
       </div>
-      <CurrencyQuickSelect />
+      <CurrencyQuickSelect
+        onCurrencyQuickSelect={(currency) => setFromCurrency(currency)}
+      />
     </div>
   );
 };
