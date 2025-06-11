@@ -1,7 +1,7 @@
 import React from 'react';
 import { SUPPORTED_CURRENCIES } from '../../../../constants/currencies';
 
-export const CurrencyQuickSelect = () => {
+export const CurrencyQuickSelect = ({ onCurrencyQuickSelect }) => {
   return (
     <>
       {' '}
@@ -9,6 +9,7 @@ export const CurrencyQuickSelect = () => {
         {SUPPORTED_CURRENCIES.map((currency) => (
           <button
             key={currency}
+            onClick={() => onCurrencyQuickSelect(currency)}
             className="!rounded-button whitespace-nowrap bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg text-sm cursor-pointer"
           >
             {currency}
