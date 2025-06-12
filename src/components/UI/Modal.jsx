@@ -65,8 +65,10 @@ export const Modal = ({
           <div className="pt-3 border-t">
             {' '}
             <div className="flex justify-between">
-              <span className="text-gray-600"></span>
-              <span className="font-medium"></span>
+              <span className="text-gray-600">Total Amount:</span>
+              <span className="font-medium">
+                {fromAmount} {fromCurrency}
+              </span>
             </div>
           </div>
         </div>
