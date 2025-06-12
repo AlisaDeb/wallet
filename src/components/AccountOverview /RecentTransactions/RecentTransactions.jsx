@@ -1,12 +1,43 @@
+import {
+  ArrowDownTrayIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '@heroicons/react/24/outline';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CURRENCY_SYMBOLS } from '../../../constants/currencies';
+import { Pagination } from '../Pagination/Pagination';
 
 const FILTER_OPTIONS = ['All', 'Incoming', 'Outgoing'];
+const ITEMS_PER_PAGE = 7;
 
 export const RecentTransactions = () => {
   const [filter, setFilter] = useState('All');
+  const [currentPage, setCurrentPage] = useState(1);
+
   const transactions = useSelector((state) => state.wallet.transactions);
+
+  const changeCurrentPage = (page) => {
+    setCurrentPage(page);
+  };
+
+  const nextPage = () => {
+    setCurrentPage((prev) => {
+      if (prev < totalPages) {
+        return prev + 1;
+      }
+      return prev;
+    });
+  };
+
+  const prevPage = () => {
+    setCurrentPage((prev) => {
+      if (prev > 1) {
+        return prev - 1;
+      }
+      return prev;
+    });
+  };
 
   const filteredTransactions = transactions.filter((item) => {
     if (filter === 'All') return true;
@@ -14,6 +45,11 @@ export const RecentTransactions = () => {
     if (filter === 'Outgoing') return item.amount < 0;
     return true;
   });
+
+  const totalPages = Math.ceil(filteredTransactions.length / ITEMS_PER_PAGE);
+  const firstIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const lastIndex = firstIndex + ITEMS_PER_PAGE;
+  const slicedTransactions = filteredTransactions.slice(firstIndex, lastIndex);
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
@@ -35,19 +71,10 @@ export const RecentTransactions = () => {
               {type}
             </button>
           ))}
-          {/* <button className="whitespace-nowrap px-3 py-1 text-sm rounded-lg bg-indigo-100 text-indigo-600 cursor-pointer ">
-            All
-          </button>
-          <button className="whitespace-nowrap px-3 py-1 text-sm rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer ">
-            Incoming
-          </button>
-          <button className="whitespace-nowrap px-3 py-1 text-sm rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer">
-            Outgoing
-          </button> */}
         </div>
       </div>
       <div className="overflow-x-auto">
-        {transactions.length === 0 ? (
+        {slicedTransactions.length === 0 ? (
           <p className="text-sm text-gray-500">No transactions yet.</p>
         ) : (
           <table className="min-w-full divide-y divide-gray-200">
@@ -81,7 +108,7 @@ export const RecentTransactions = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredTransactions.map((item) => (
+              {slicedTransactions.map((item) => (
                 <tr key={item.id} className="hover:bg-gray-50 cursor-pointer">
                   <td className=" px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex flex-col">
@@ -112,7 +139,37 @@ export const RecentTransactions = () => {
           </table>
         )}
       </div>
-      <div></div>
+      <div className="mt-4 flex justify-between items-center">
+        <button className="flex items-center gap-1 whitespace-nowrap text-sm text-indigo-600 hover:text-indigo-800 cursor-pointer">
+          <ArrowDownTrayIcon className="w-5 h-5" strokeWidth={2} />
+          Export History
+        </button>
+        <div className="flex space-x-2">
+          <button
+            onClick={prevPage}
+            className=" whitespace-nowrap bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg text-sm cursor-pointer"
+          >
+            <ChevronLeftIcon
+              className="w-4 h-4 text-gray-600"
+              strokeWidth={3}
+            />
+          </button>
+          <Pagination
+            totalPages={totalPages}
+            changeCurrentPage={changeCurrentPage}
+            currentPage={currentPage}
+          />
+          <button
+            onClick={nextPage}
+            className=" whitespace-nowrap bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg text-sm cursor-pointer"
+          >
+            <ChevronRightIcon
+              className="w-4 h-4 text-gray-600"
+              strokeWidth={3}
+            />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
