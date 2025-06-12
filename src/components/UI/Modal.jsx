@@ -23,14 +23,9 @@ export const Modal = ({
         fromCurrency,
         toCurrency,
       })
-    ),
-      onClose();
-    toast.success(
-      <>
-        <div>Transaction Successful</div>
-        <div>Transaction ID: xxxxxx</div>
-      </>
     );
+    onClose();
+    toast.success('Transaction Successful!');
   };
 
   return (
