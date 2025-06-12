@@ -1,5 +1,6 @@
 import React from 'react';
 import { CurrencyConverter } from './CurrencyConverter/CurrencyConverter';
+import { RecentTransactions } from './RecentTransactions/RecentTransactions';
 
 export const AccountOverview = () => {
   return (
@@ -7,7 +8,7 @@ export const AccountOverview = () => {
       {' '}
       <div className="lg:col-span-2 space-y-8">
         <CurrencyConverter />
-        <div>Recent Transactions</div>
+        <RecentTransactions />
       </div>
       <div>
         <div>Top Up Balance</div>

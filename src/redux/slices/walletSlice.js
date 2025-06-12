@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
   balance: {
@@ -28,6 +29,42 @@ const walletSlice = createSlice({
 
       state.balance[from] -= parseFloat(fromAmount);
       state.balance[to] += parseFloat(toAmount);
+
+      const now = new Date();
+      const dateString = now.toLocaleDateString('en-CA', {
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+      const timeString = now.toLocaleTimeString('en-GB', {
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      });
+
+      state.transactions.unshift({
+        id: uuidv4(),
+        type: 'debit',
+        date: dateString,
+        time: timeString,
+        description: `Transferred from ${fromCurrency} wallet`,
+        amount: -parseFloat(fromAmount),
+        currency: fromCurrency,
+        status: 'completed',
+      });
+
+      state.transactions.unshift({
+        id: uuidv4(),
+        type: 'credit',
+        date: dateString,
+        time: timeString,
+        description: `Received in ${toCurrency} wallet from conversion`,
+        amount: parseFloat(toAmount),
+        currency: toCurrency,
+        status: 'completed',
+      });
     },
   },
 });

@@ -106,7 +106,7 @@ export const CurrencyConverter = () => {
         toast.error('Please enter a valid number');
       } else if (amount <= 0) {
         toast.error('Amount must be greater than zero');
-      } else if (amount >= availableBalance) {
+      } else if (amount > availableBalance) {
         toast.error('Not enough balance to complete the transaction');
       }
       return;
