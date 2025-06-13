@@ -6,6 +6,7 @@ import {
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CURRENCY_SYMBOLS } from '../../../constants/currencies';
+import { exportToCSV } from '../../../utils/exportToCSV';
 import { Pagination } from '../Pagination/Pagination';
 
 const FILTER_OPTIONS = ['All', 'Incoming', 'Outgoing'];
@@ -140,7 +141,10 @@ export const RecentTransactions = () => {
         )}
       </div>
       <div className="mt-4 flex justify-between items-center">
-        <button className="flex items-center gap-1 whitespace-nowrap text-sm text-indigo-600 hover:text-indigo-800 cursor-pointer">
+        <button
+          onClick={() => exportToCSV(filteredTransactions)}
+          className="flex items-center gap-1 whitespace-nowrap text-sm text-indigo-600 hover:text-indigo-800 cursor-pointer"
+        >
           <ArrowDownTrayIcon className="w-5 h-5" strokeWidth={2} />
           Export History
         </button>
