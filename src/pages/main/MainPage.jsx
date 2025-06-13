@@ -1,5 +1,5 @@
 import React from 'react';
-import { RightPanel } from '../../components/RightPanel/RightPanel';
+import { AccountOverview } from '../../components/AccountOverview /AccountOverview';
 import { TotalBalance } from '../../components/TotalBalance/TotalBalance';
 
 export const MainPage = () => {
@@ -7,7 +7,7 @@ export const MainPage = () => {
     <>
       <div className="container mx-auto px-6 py-8">
         <TotalBalance />
-        <RightPanel />
+        <AccountOverview />
       </div>
     </>
   );

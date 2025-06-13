@@ -2,7 +2,7 @@ import React from 'react';
 import { CurrencyConverter } from './CurrencyConverter/CurrencyConverter';
 import { RecentTransactions } from './RecentTransactions/RecentTransactions';
 
-export const RightPanel = () => {
+export const AccountOverview = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {' '}
