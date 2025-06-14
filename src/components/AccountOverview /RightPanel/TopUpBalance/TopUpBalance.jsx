@@ -12,6 +12,7 @@ import {
   setSelectedCurrency,
   topUpBalance,
 } from '../../../../redux/slices/walletSlice';
+import { isCrypto } from '../../../../utils/formatting';
 
 export const TopUpBalance = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,17 @@ export const TopUpBalance = () => {
   useEffect(() => {
     dispatch(setSelectedCurrency(currency));
   }, [currency, dispatch]);
+
+  const handleAmountChange = (e) => {
+    let val = e.target.value;
+
+    const decimalLimit = isCrypto(currency) ? 10 : 2;
+    const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalLimit}})?$`);
+
+    if (val === '' || regex.test(val)) {
+      setAmount(val);
+    }
+  };
 
   const handleQuickAmount = (value) => {
     setAmount((prev) => parseFloat(prev || '0') + value);
@@ -37,6 +49,7 @@ export const TopUpBalance = () => {
     toast.success(`Successfully topped up your ${currency} wallet`);
     setAmount('');
   };
+
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">
@@ -56,7 +69,7 @@ export const TopUpBalance = () => {
             type="number"
             min="0"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={handleAmountChange}
             className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-8 pr-12 sm:text-sm border-gray-300 rounded-md py-3"
             placeholder="0.00"
           ></input>

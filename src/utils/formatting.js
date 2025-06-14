@@ -5,6 +5,6 @@ export const isCrypto = (currency) => {
 
 export const formatAmount = (amount, currency) => {
   if (!amount) return '';
-  const decimals = isCrypto(currency) ? 8 : 2;
+  const decimals = isCrypto(currency) ? 10 : 2;
   return parseFloat(amount).toFixed(decimals);
 };
