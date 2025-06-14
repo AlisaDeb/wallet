@@ -1,4 +1,5 @@
 import React from 'react';
+import { isCrypto } from '../../../../utils/formatting';
 
 export const CurrencyInputBlock = ({
   label,
@@ -10,10 +11,13 @@ export const CurrencyInputBlock = ({
   onFocus,
 }) => {
   const handleChange = (e) => {
-    const val = e.target.value;
+    let val = e.target.value;
 
-    if (val === '' || parseFloat(val) >= 0) {
-      setAmount(e.target.value);
+    const decimalLimit = isCrypto(currency) ? 10 : 2;
+    const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalLimit}})?$`);
+
+    if (val === '' || regex.test(val)) {
+      setAmount(val);
     }
   };
   return (
@@ -31,6 +35,7 @@ export const CurrencyInputBlock = ({
             onChange={handleChange}
             onFocus={onFocus}
             className="flex-grow w-full px-4 py-3 outline-none border-r-0"
+            placeholder="0.00"
           />
           <select
             value={currency}
