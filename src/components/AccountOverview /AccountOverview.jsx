@@ -1,6 +1,7 @@
 import React from 'react';
 import { CurrencyConverter } from './CurrencyConverter/CurrencyConverter';
 import { RecentTransactions } from './RecentTransactions/RecentTransactions';
+import { SecurityStatus } from './RightPanel/SecurityStatus/SecurityStatus';
 import { TopUpBalance } from './RightPanel/TopUpBalance/TopUpBalance';
 
 export const AccountOverview = () => {
@@ -13,7 +14,7 @@ export const AccountOverview = () => {
       </div>
       <div className="space-y-8">
         <TopUpBalance />
-        <div>Account Summary</div>
+        <SecurityStatus />
       </div>
     </div>
   );
