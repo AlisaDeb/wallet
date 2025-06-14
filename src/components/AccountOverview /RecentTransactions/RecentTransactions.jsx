@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CURRENCY_SYMBOLS } from '../../../constants/currencies';
 import { exportToCSV } from '../../../utils/exportToCSV';
+import { isCrypto } from '../../../utils/formatting';
 import { Pagination } from '../Pagination/Pagination';
 
 const FILTER_OPTIONS = ['All', 'Incoming', 'Outgoing'];
@@ -127,7 +128,10 @@ export const RecentTransactions = () => {
                   >
                     {item.amount < 0 ? '-' : '+'}
                     {CURRENCY_SYMBOLS[item.currency]}
-                    {Math.abs(item.amount)}
+                    {Math.abs(item.amount).toLocaleString('en-CE', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: isCrypto(item.currency) ? 10 : 2,
+                    })}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
