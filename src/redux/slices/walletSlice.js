@@ -66,8 +66,43 @@ const walletSlice = createSlice({
         status: 'completed',
       });
     },
+    topUpBalance(state, action) {
+      const { amount, currency } = action.payload;
+      const value = parseFloat(amount);
+      if (!value || value <= 0) return;
+
+      const lowerCurrency = currency.toLowerCase();
+
+      state.balance[lowerCurrency] += value;
+
+      const now = new Date();
+      const dateString = now.toLocaleDateString('en-CA', {
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+      const timeString = now.toLocaleTimeString('en-GB', {
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      });
+
+      state.transactions.unshift({
+        id: uuidv4(),
+        type: 'credit',
+        date: dateString,
+        time: timeString,
+        description: `Top-up to ${currency} wallet`,
+        amount: value,
+        currency,
+        status: 'completed',
+      });
+    },
   },
 });
 
-export const { setSelectedCurrency, convertAndTransfer } = walletSlice.actions;
+export const { setSelectedCurrency, convertAndTransfer, topUpBalance } =
+  walletSlice.actions;
 export default walletSlice.reducer;
