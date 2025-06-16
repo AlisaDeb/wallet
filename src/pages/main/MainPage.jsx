@@ -1,8 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-import { AccountOverview } from '../../components/AccountOverview /AccountOverview';
-import { Footer } from '../../components/Footer/Footer';
+import { AccountOverview } from '../../components/AccountOverview/AccountOverview';
 import { TotalBalance } from '../../components/TotalBalance/TotalBalance';
 
 const itemVariants = {
@@ -23,7 +21,6 @@ export const MainPage = () => {
           <TotalBalance />
         </motion.div>
         <AccountOverview />
-        <Footer />
       </main>
     </>
   );
