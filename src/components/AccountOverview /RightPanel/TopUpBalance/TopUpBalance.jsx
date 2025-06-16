@@ -13,6 +13,7 @@ import {
   topUpBalance,
 } from '../../../../redux/slices/walletSlice';
 import { isCrypto } from '../../../../utils/formatting';
+import { CurrencyAmountInput } from '../../../UI/CurrencyAmountInput';
 
 export const TopUpBalance = () => {
   const dispatch = useDispatch();
@@ -25,16 +26,16 @@ export const TopUpBalance = () => {
     dispatch(setSelectedCurrency(currency));
   }, [currency, dispatch]);
 
-  const handleAmountChange = (e) => {
-    let val = e.target.value;
+  // const handleAmountChange = (e) => {
+  //   let val = e.target.value;
 
-    const decimalLimit = isCrypto(currency) ? 10 : 2;
-    const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalLimit}})?$`);
+  //   const decimalLimit = isCrypto(currency) ? 10 : 2;
+  //   const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalLimit}})?$`);
 
-    if (val === '' || regex.test(val)) {
-      setAmount(val);
-    }
-  };
+  //   if (val === '' || regex.test(val)) {
+  //     setAmount(val);
+  //   }
+  // };
 
   const handleQuickAmount = (value) => {
     setAmount((prev) => parseFloat(prev || '0') + value);
@@ -56,7 +57,16 @@ export const TopUpBalance = () => {
         Top Up Balance
       </h2>
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <CurrencyAmountInput
+          label={'Amount'}
+          amount={amount}
+          setAmount={setAmount}
+          currency={currency}
+          setCurrency={setCurrency}
+          currencies={SUPPORTED_CURRENCIES}
+          currencySymbol={CURRENCY_SYMBOLS[currency]}
+        />
+        {/* <label className="block text-sm font-medium text-gray-700 mb-1">
           Amount
         </label>
         <div className="relative rounded-md shadow-sm">
@@ -86,7 +96,7 @@ export const TopUpBalance = () => {
               ))}
             </select>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="grid grid-cols-3 gap-2 mb-4">
         {[100, 500, 1000].map((item) => (
@@ -106,7 +116,7 @@ export const TopUpBalance = () => {
         ))}
       </div>
       {!isFiatCurrency && (
-        <p className="text-xs text-gray-500 mb-4">
+        <p className="text-xs text-center text-gray-500 mb-4">
           Quick top-up buttons are only available for fiat currencies.
         </p>
       )}
