@@ -10,7 +10,7 @@ export const CurrencyQuickSelect = ({ onCurrencyQuickSelect }) => {
           <button
             key={currency}
             onClick={() => onCurrencyQuickSelect(currency)}
-            className="!rounded-button whitespace-nowrap bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg text-sm cursor-pointer"
+            className="!rounded-button whitespace-nowrap bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg text-sm scale-smooth cursor-pointer"
           >
             {currency}
           </button>

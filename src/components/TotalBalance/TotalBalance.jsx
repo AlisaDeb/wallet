@@ -1,8 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { SUPPORTED_CURRENCIES } from '../../constants/currencies';
 import { setSelectedCurrency } from '../../redux/slices/walletSlice';
 import { BalanceDisplay } from './components/BalanceDisplay';
+import { FaPaperPlane } from 'react-icons/fa';
+
+const buttonIconVariants = {
+  hidden: { opacity: 0, x: -30, y: 30, rotate: -45 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    rotate: 0,
+    transition: { duration: 0.7, ease: 'easeIn', delay: 0.7 },
+  },
+};
 
 export const TotalBalance = () => {
   const dispatch = useDispatch();
@@ -27,7 +40,7 @@ export const TotalBalance = () => {
                   <button
                     key={currency}
                     onClick={() => dispatch(setSelectedCurrency(currency))}
-                    className={`!rounded-button whitespace-nowrap px-2 py-0.5 text-xs rounded
+                    className={`!rounded-button whitespace-nowrap px-2 py-0.5 text-xs rounded scale-smooth 
                     ${
                       selectedCurrency === currency
                         ? ' bg-indigo-100 text-indigo-600'
@@ -49,9 +62,16 @@ export const TotalBalance = () => {
               Account: **** **** **** 4582
             </p>
           </div>
-          <div>
-            <button>Send</button>
-          </div>
+          <button className="whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center cursor-not-allowed">
+            <motion.span
+              variants={buttonIconVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <FaPaperPlane className="mr-2" />
+            </motion.span>
+            Send
+          </button>
         </div>
       </div>
     </>

@@ -4,7 +4,7 @@ import { FaShieldAlt } from 'react-icons/fa';
 
 export const SecurityStatus = () => {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
+    <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-indigo-500/25 ">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-gray-800">Security Status</h2>
         <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
