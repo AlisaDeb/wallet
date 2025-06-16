@@ -115,7 +115,7 @@ export const CurrencyConverter = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
+    <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-indigo-500/25 ">
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
@@ -138,7 +138,8 @@ export const CurrencyConverter = () => {
           amount={fromAmount}
           currency={fromCurrency}
           setAmount={(val) => {
-            setFromAmount(val), setActiveInput('from');
+            setFromAmount(val);
+            setActiveInput('from');
           }}
           setCurrency={setFromCurrency}
           onFocus={() => setActiveInput('from')}

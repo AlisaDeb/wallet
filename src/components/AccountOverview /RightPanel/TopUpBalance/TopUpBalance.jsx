@@ -52,7 +52,7 @@ export const TopUpBalance = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
+    <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-indigo-500/25 ">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">
         Top Up Balance
       </h2>

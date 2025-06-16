@@ -54,7 +54,7 @@ export const RecentTransactions = () => {
   const slicedTransactions = filteredTransactions.slice(firstIndex, lastIndex);
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
+    <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-indigo-500/25 ">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-800">
           Recent Transactions

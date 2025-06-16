@@ -1,6 +1,26 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Outlet } from 'react-router-dom';
 import { BellIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
+
+const headerIconVariants = {
+  hidden: {
+    opacity: 0,
+    y: -50,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 500,
+      damping: 10,
+      bounce: 0.6,
+      duration: 0.8,
+      delay: 1.7,
+    },
+  },
+};
 
 export const Root = () => {
   return (
@@ -9,10 +29,13 @@ export const Root = () => {
         {' '}
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-x-1">
-            <img
-              className="h-10 w-10 transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-105"
+            <motion.img
+              className="h-10 w-10"
               src="/src/images/dollar_11218169.png"
-              alt=""
+              alt="Dollar Icon"
+              variants={headerIconVariants}
+              initial="hidden"
+              animate="visible"
             />
             <h1 className="text-2xl font-bold text-indigo-600">DigiWallet</h1>
           </div>
