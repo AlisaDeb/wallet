@@ -1,7 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { convertAndTransfer } from '../../redux/slices/walletSlice';
+import {
+  convertAndTransfer,
+  syncWalletToAuth,
+} from '../../redux/slices/walletSlice';
 
 export const Modal = ({
   isOpen,
@@ -25,6 +28,7 @@ export const Modal = ({
       })
     );
     onClose();
+    dispatch(syncWalletToAuth());
     toast.success('Transaction Successful!');
   };
 

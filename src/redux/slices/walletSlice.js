@@ -1,24 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { getFormattedDateTime } from '../../utils/dateTime';
+import { updateUserWallet } from './authSlice';
 
-const initialState = {
+const emptyWallet = {
   balance: {
-    usd: 5842.75,
-    eur: 3376.33,
-    sgd: 1287.87,
-    btc: 0.0672390156,
-    eth: 1.227752232,
-    ltc: 19.4622044012,
+    usd: 0,
+    eur: 0,
+    sgd: 0,
+    btc: 0,
+    eth: 0,
+    ltc: 0,
   },
   selectedCurrency: 'USD',
   transactions: [],
 };
 
+const initialState = emptyWallet;
+
 const walletSlice = createSlice({
   name: 'wallet',
   initialState,
   reducers: {
+    loadWallet(state, action) {
+      return action.payload || emptyWallet;
+    },
     setSelectedCurrency(state, action) {
       state.selectedCurrency = action.payload;
     },
@@ -77,9 +83,20 @@ const walletSlice = createSlice({
         status: 'completed',
       });
     },
+    resetWallet: () => initialState,
   },
 });
 
-export const { setSelectedCurrency, convertAndTransfer, topUpBalance } =
-  walletSlice.actions;
+export const {
+  loadWallet,
+  setSelectedCurrency,
+  convertAndTransfer,
+  topUpBalance,
+  resetWallet,
+} = walletSlice.actions;
+
+export const syncWalletToAuth = () => (dispatch, getState) => {
+  const wallet = getState().wallet;
+  dispatch(updateUserWallet(wallet));
+};
 export default walletSlice.reducer;

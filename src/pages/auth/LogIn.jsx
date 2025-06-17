@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser, clearError } from '../../redux/slices/authSlice';
+import { loginUser, clearError } from '../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { loadWallet } from '../../redux/slices/walletSlice';
 
-export const SignUp = ({ switchToLogin, onClose }) => {
+export const LogIn = ({ switchToRegister, onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -13,7 +13,6 @@ export const SignUp = ({ switchToLogin, onClose }) => {
   const currentUserId = useSelector((state) => state.auth.currentUserId);
   const users = useSelector((state) => state.auth.users);
 
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,7 +29,7 @@ export const SignUp = ({ switchToLogin, onClose }) => {
       }
       navigate('/dashboard');
     }
-  }, [currentUserId, users, dispatch, navigate]);
+  }, [currentUserId, navigate, dispatch, users]);
 
   useEffect(() => {
     return () => {
@@ -40,38 +39,28 @@ export const SignUp = ({ switchToLogin, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(registerUser({ name, email, password }));
+    dispatch(loginUser({ email, password }));
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-sm bg-white shadow-md rounded-lg px-4 py-6 sm:px-5 sm:py-7 flex flex-col gap-4 relative"
+      className="relative w-full max-w-md bg-white shadow-md rounded-xl px-6 py-8 flex flex-col gap-5"
     >
       <button
         type="button"
         onClick={onClose}
-        className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors"
+        className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
         aria-label="close form"
       >
-        <XMarkIcon className="h-5 w-5" />
+        <XMarkIcon className="h-6 w-6" />
       </button>
-
-      <h2 className="text-lg sm:text-xl font-semibold text-center text-gray-700">
-        Create your account
+      <h2 className="text-xl font-semibold text-center text-gray-700 mb-2">
+        Log in
       </h2>
       <p className="text-center text-gray-500 text-sm">
-        Welcome! Please fill in the details to get started
+        Welcome back! Please sign in to continue
       </p>
-
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-        className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
-      />
 
       <input
         type="email"
@@ -79,16 +68,16 @@ export const SignUp = ({ switchToLogin, onClose }) => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="px-3 py-2  rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+        className="px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
       />
 
       <input
         type="password"
-        placeholder="Password"
+        placeholder="Пароль"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
-        className="px-3 py-2  rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+        className="px-4 py-3  rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
       />
 
       {error && (
@@ -99,18 +88,18 @@ export const SignUp = ({ switchToLogin, onClose }) => {
 
       <button
         type="submit"
-        className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg text-sm transition duration-200"
+        className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition duration-200"
       >
         Continue
       </button>
 
       <p className="text-center text-sm text-gray-600">
-        Already have an account?{' '}
+        Don't have an account?{' '}
         <span
           className="text-indigo-600 font-semibold cursor-pointer hover:underline"
-          onClick={switchToLogin}
+          onClick={switchToRegister}
         >
-          Sign in
+          Sign up
         </span>
       </p>
     </form>

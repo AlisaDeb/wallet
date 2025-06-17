@@ -10,9 +10,9 @@ import {
 } from '../../../../constants/currencies';
 import {
   setSelectedCurrency,
+  syncWalletToAuth,
   topUpBalance,
 } from '../../../../redux/slices/walletSlice';
-import { isCrypto } from '../../../../utils/formatting';
 import { CurrencyAmountInput } from '../../../UI/CurrencyAmountInput';
 
 export const TopUpBalance = () => {
@@ -26,17 +26,6 @@ export const TopUpBalance = () => {
     dispatch(setSelectedCurrency(currency));
   }, [currency, dispatch]);
 
-  // const handleAmountChange = (e) => {
-  //   let val = e.target.value;
-
-  //   const decimalLimit = isCrypto(currency) ? 10 : 2;
-  //   const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalLimit}})?$`);
-
-  //   if (val === '' || regex.test(val)) {
-  //     setAmount(val);
-  //   }
-  // };
-
   const handleQuickAmount = (value) => {
     setAmount((prev) => parseFloat(prev || '0') + value);
   };
@@ -47,6 +36,7 @@ export const TopUpBalance = () => {
       return;
     }
     dispatch(topUpBalance({ amount, currency }));
+    dispatch(syncWalletToAuth());
     toast.success(`Successfully topped up your ${currency} wallet`);
     setAmount('');
   };
@@ -66,37 +56,6 @@ export const TopUpBalance = () => {
           currencies={SUPPORTED_CURRENCIES}
           currencySymbol={CURRENCY_SYMBOLS[currency]}
         />
-        {/* <label className="block text-sm font-medium text-gray-700 mb-1">
-          Amount
-        </label>
-        <div className="relative rounded-md shadow-sm">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <span className="text-gray-500 sm:text-sm">
-              {CURRENCY_SYMBOLS[currency]}
-            </span>
-          </div>
-          <input
-            type="number"
-            min="0"
-            value={amount}
-            onChange={handleAmountChange}
-            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-8 pr-12 sm:text-sm border-gray-300 rounded-md py-3"
-            placeholder="0.00"
-          ></input>
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-            <select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value)}
-              className="outline-none border-l-0 border-gray-300  py-0 pl-2 pr-2 text-gray-500 sm:text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-            >
-              {SUPPORTED_CURRENCIES.map((symbol) => (
-                <option key={symbol} value={symbol}>
-                  {symbol}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div> */}
       </div>
       <div className="grid grid-cols-3 gap-2 mb-4">
         {[100, 500, 1000].map((item) => (
