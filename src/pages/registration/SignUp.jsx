@@ -77,7 +77,7 @@ export const SignUp = ({ switchToLogin, onClose }) => {
         onChange={(e) => setEmail(e.target.value)}
         required
         autoComplete="off"
-        className="px-3 py-2  rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+        className="px-3 py-2  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
       />
 
       <input
@@ -87,7 +87,7 @@ export const SignUp = ({ switchToLogin, onClose }) => {
         onChange={(e) => setPassword(e.target.value)}
         required
         autoComplete="off"
-        className="px-3 py-2  rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+        className="px-3 py-2  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
       />
 
       {error && (
@@ -98,7 +98,7 @@ export const SignUp = ({ switchToLogin, onClose }) => {
 
       <button
         type="submit"
-        className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg text-sm transition duration-200"
+        className="bg-[#2cd6ab] hover:bg-[#28bc99]  text-white font-semibold py-2.5 rounded-lg text-sm transition duration-200"
       >
         Continue
       </button>
