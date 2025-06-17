@@ -18,11 +18,14 @@ const authSlice = createSlice({
         state.error = 'A user with this email already exists';
         return;
       }
+
+      const nowISO = new Date().toISOString();
       const newUser = {
         id: crypto.randomUUID(),
         name,
         email,
         password,
+        lastLogin: nowISO,
         wallet: {
           balance: {
             usd: 5842.75,
@@ -46,6 +49,7 @@ const authSlice = createSlice({
         (user) => user.email === email && user.password === password
       );
       if (user) {
+        user.lastLogin = new Date().toISOString();
         state.currentUserId = user.id;
         state.error = null;
       } else {
