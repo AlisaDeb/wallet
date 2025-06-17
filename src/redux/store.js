@@ -10,11 +10,13 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import authReducer from './slices/authSlice';
 import currenciesReducer from './slices/currenciesSlice';
 import ratesReducer from './slices/ratesSlice';
 import walletReducer from './slices/walletSlice';
 
 const rootReducer = combineReducers({
+  auth: authReducer,
   wallet: walletReducer,
   rates: ratesReducer,
   currencies: currenciesReducer,

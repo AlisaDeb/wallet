@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { AccountOverview } from '../../components/AccountOverview/AccountOverview';
 import { TotalBalance } from '../../components/TotalBalance/TotalBalance';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadWallet } from '../../redux/slices/walletSlice';
+import { useNavigate } from 'react-router-dom';
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -9,6 +12,26 @@ const itemVariants = {
 };
 
 export const MainPage = () => {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
+  // const currentUserId = useSelector((state) => state.auth.currentUserId);
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (!currentUserId) {
+  //     navigate('/login');
+  //   }
+  // }, [currentUserId, navigate]);
+
+  useEffect(() => {
+    if (auth.currentUserId) {
+      const currentUser = auth.users.find((u) => u.id === auth.currentUserId);
+      if (currentUser) {
+        dispatch(loadWallet(currentUser.wallet));
+      }
+    }
+  }, [auth.currentUserId, auth.users, dispatch]);
   return (
     <>
       <main className="container mx-auto px-6 py-8">

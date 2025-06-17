@@ -1,6 +1,9 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { BellIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
+import { useLocation } from 'react-router-dom';
+import { LandingNav } from '../../pages/landing/LandingNav';
+import { LogoutButton } from './components/LogoutButton';
+import { UserInfo } from './components/UserInfo';
 
 const headerIconVariants = {
   hidden: {
@@ -22,9 +25,11 @@ const headerIconVariants = {
 };
 
 export const Header = () => {
+  const location = useLocation();
+  const isLanding = location.pathname === '/';
+
   return (
     <header className="bg-white shadow-sm">
-      {' '}
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <div className="flex items-center gap-x-1">
           <motion.img
@@ -37,31 +42,26 @@ export const Header = () => {
           />
           <h1 className="text-2xl font-bold text-indigo-600">DigiWallet</h1>
         </div>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-4">
-            <button
-              className="whitespace-nowrap bg-indigo-600 
-            hover:bg-indigo-700 text-white px-4 py-2 
-            rounded-lg items-center cursor-pointer"
-            >
-              Sign up{' '}
-            </button>
-            <button
-              className="whitespace-nowrap bg-gray-100 hover:bg-gray-200 
- text-indigo-600 px-4 py-2 rounded-lg items-center cursor-pointer"
-            >
-              Log in
-            </button>
+
+        {isLanding ? (
+          <div className="flex items-center space-x-8">
+            <LandingNav />
           </div>
+        ) : (
           <div className="flex items-center space-x-4">
-            <button className="text-gray-600 hover:text-gray-800">
-              <BellIcon className="h-6 w-6" />
-            </button>
-            <button className="text-gray-600 hover:text-gray-800">
-              <Cog6ToothIcon className="h-6 w-6" />
-            </button>
+            <div className="flex items-center space-x-4">
+              <LogoutButton />
+              <button className="text-gray-600 hover:text-gray-800 transition-transform duration-200 ease-in-out transform hover:scale-110">
+                <BellIcon className="h-5 w-5" />
+              </button>
+              <button className="text-gray-600 hover:text-gray-800 transition-transform duration-200 ease-in-out transform hover:scale-110">
+                <Cog6ToothIcon className="h-5 w-5" />
+              </button>
+
+              <UserInfo />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </header>
   );

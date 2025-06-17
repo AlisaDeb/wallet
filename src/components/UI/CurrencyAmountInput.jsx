@@ -10,7 +10,6 @@ export const CurrencyAmountInput = ({
   currencies = [],
   onFocus,
   currencySymbol,
-  placeholder = '0.00',
 }) => {
   const handleChange = (e) => {
     let val = e.target.value;

@@ -1,41 +1,85 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { LogIn } from '../auth/LogIn';
+import { SignUp } from '../registration/SignUp';
 
 export const LandingPage = () => {
-  const navigate = useNavigate();
+  const [showForm, setShowForm] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+
+  const openLoginForm = () => {
+    setIsLogin(true);
+    setShowForm(true);
+  };
+
+  const switchToRegister = () => {
+    setIsLogin(false);
+  };
+
+  const switchToLogin = () => {
+    setIsLogin(true);
+  };
+
+  const closeForm = () => {
+    setShowForm(false);
+  };
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-indigo-50 px-4 md:px-20">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-center min-h-screen">
-        <div
-          className="md:w-1/2 flex flex-col py-12 md:py-0
-          items-center md:items-start
-          text-center md:text-left
-        "
-        >
-          <h1 className="text-3xl md:text-[50px]  font-bold text-indigo-700 mb-6">
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-center min-h-screen w-full">
+        <div className="md:w-1/3 flex flex-col pt-12 pb-2 md:py-0 items-center md:items-start text-center md:text-left">
+          <h1 className="text-3xl md:text-[50px] font-bold text-indigo-700 mb-6">
             Welcome to DigiWallet
           </h1>
-          <p className="text-base md:text-[20px] text-gray-600 mb-8 max-w-md">
-            Your personal multi-currency wallet.
-            <br /> Fast. Secure. Simple.
-          </p>
-          <div className="flex justify-center md:justify-start space-x-4 w-full md:w-auto">
-            <button className="relative overflow-hidden px-8 py-4 rounded-full text-lg font-semibold text-violet-600 bg-gray-100 border-none">
-              <span className="relative z-10">Get Started</span>
-              <span
-                className="absolute top-0 left-0 h-full w-1/4 rounded-full transition-all duration-[850ms] ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] hover:w-full"
-                style={{ backgroundColor: '#34e7ba' }}
-              ></span>
-            </button>
-          </div>
+
+          {!showForm && (
+            <>
+              <p className="text-base md:text-[20px] text-gray-600 mb-8 max-w-md">
+                Your personal multi-currency wallet.
+                <br /> Fast. Secure. Simple.
+              </p>
+              <button
+                onClick={openLoginForm}
+                className="relative overflow-hidden px-8 py-4 rounded-full text-lg font-semibold text-violet-600 border-none"
+                style={{ backgroundColor: '#e8e9eb' }}
+              >
+                <span className="relative z-10">Get Started</span>
+                <span
+                  className="absolute top-0 left-0 h-full w-1/4 rounded-full transition-all duration-[850ms] ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] hover:w-full"
+                  style={{ backgroundColor: '#34e7ba' }}
+                />
+              </button>
+            </>
+          )}
+
+          <AnimatePresence mode="wait">
+            {showForm && (
+              <motion.div
+                key={isLogin ? 'login' : 'signup'}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0, transition: { delay: 0.4 } }}
+                exit={{ opacity: 0, x: -50, transition: { duration: 0.4 } }}
+                transition={{ duration: 0.4 }}
+                className="w-full"
+              >
+                {isLogin ? (
+                  <LogIn
+                    switchToRegister={switchToRegister}
+                    onClose={closeForm}
+                  />
+                ) : (
+                  <SignUp switchToLogin={switchToLogin} onClose={closeForm} />
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        <div className="md:w-3/5 flex justify-center items-center px-4 md:px-0">
+        <div className="md:w-2/3 flex justify-center items-center p-4 md:p-0">
           <img
             src="/src/images/Image.png"
-            alt="Logo"
-            className="object-contain w-full max-w-[700px] max-h-[80vh]"
+            alt="Illustration DigiWallet"
+            className="object-contain w-full max-w-[90%] md:max-w-full h-auto md:max-h-[90vh]"
           />
         </div>
       </div>

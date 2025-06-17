@@ -12,7 +12,6 @@ export const fetchRates = createAsyncThunk(
         (symbol) => symbol !== 'USD'
       ).map((symbol) => symbol.toLocaleLowerCase());
       const data = await currencyAPI.fetchExchangeRates(BASE, symbols);
-      console.log('Fetched rates from API:', data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
