@@ -1,8 +1,26 @@
 import React from 'react';
 import { FaCircleCheck } from 'react-icons/fa6';
 import { FaShieldAlt } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 export const SecurityStatus = () => {
+  const currentUserId = useSelector((state) => state.auth.currentUserId);
+  const user = useSelector((state) =>
+    state.auth.users.find((u) => u.id === currentUserId)
+  );
+
+  const formatLoginTime = (isoDate) => {
+    if (!isoDate) return 'Never';
+    const date = new Date(isoDate);
+    return date.toLocaleString('en-GB', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
   return (
     <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-indigo-500/25 ">
       <div className="flex justify-between items-center mb-4">
@@ -35,7 +53,9 @@ export const SecurityStatus = () => {
             <FaCircleCheck />
           </div>
           <div className="ml-3">
-            <p className="text-sm text-gray-700">Last login: Today, 08:45 AM</p>
+            <p className="text-sm text-gray-700">
+              Last login: {formatLoginTime(user?.lastLogin)}
+            </p>
           </div>
         </div>
       </div>

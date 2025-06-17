@@ -17,11 +17,6 @@ export const SignUp = ({ switchToLogin, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // useEffect(() => {
-  //   if (currentUserId) {
-  //     navigate('/dashboard');
-  //   }
-  // }, [currentUserId, navigate]);
   useEffect(() => {
     if (currentUserId) {
       const currentUser = users.find((u) => u.id === currentUserId);
@@ -46,6 +41,7 @@ export const SignUp = ({ switchToLogin, onClose }) => {
   return (
     <form
       onSubmit={handleSubmit}
+      autoComplete="off"
       className="w-full max-w-sm bg-white shadow-md rounded-lg px-4 py-6 sm:px-5 sm:py-7 flex flex-col gap-4 relative"
     >
       <button
@@ -70,6 +66,7 @@ export const SignUp = ({ switchToLogin, onClose }) => {
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
+        autoComplete="off"
         className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
       />
 
@@ -79,6 +76,7 @@ export const SignUp = ({ switchToLogin, onClose }) => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
+        autoComplete="off"
         className="px-3 py-2  rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
       />
 
@@ -88,6 +86,7 @@ export const SignUp = ({ switchToLogin, onClose }) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
+        autoComplete="off"
         className="px-3 py-2  rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
       />
 

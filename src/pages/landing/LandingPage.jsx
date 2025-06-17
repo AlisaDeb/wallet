@@ -12,22 +12,19 @@ export const LandingPage = () => {
     setShowForm(true);
   };
 
-  const switchToRegister = () => {
-    setIsLogin(false);
-  };
-
-  const switchToLogin = () => {
-    setIsLogin(true);
-  };
-
-  const closeForm = () => {
-    setShowForm(false);
-  };
+  const switchToRegister = () => setIsLogin(false);
+  const switchToLogin = () => setIsLogin(true);
+  const closeForm = () => setShowForm(false);
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-indigo-50 px-4 md:px-20">
+    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-indigo-50 px-4 md:px-20 overflow-hidden">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-center min-h-screen w-full">
-        <div className="md:w-1/3 flex flex-col pt-12 pb-2 md:py-0 items-center md:items-start text-center md:text-left">
+        <motion.div
+          className="md:w-1/3 flex flex-col pt-12 pb-2 pl-10 md:py-0 items-center md:items-start text-center md:text-left"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
           <h1 className="text-3xl md:text-[50px] font-bold text-indigo-700 mb-6">
             Welcome to DigiWallet
           </h1>
@@ -73,15 +70,20 @@ export const LandingPage = () => {
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
 
-        <div className="md:w-2/3 flex justify-center items-center p-4 md:p-0">
+        <motion.div
+          className="md:w-2/3 flex justify-center items-center p-4 md:p-0"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
+        >
           <img
             src="/src/images/Image.png"
             alt="Illustration DigiWallet"
             className="object-contain w-full max-w-[90%] md:max-w-full h-auto md:max-h-[90vh]"
           />
-        </div>
+        </motion.div>
       </div>
     </div>
   );

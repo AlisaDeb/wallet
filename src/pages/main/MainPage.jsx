@@ -15,15 +15,6 @@ export const MainPage = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  // const currentUserId = useSelector((state) => state.auth.currentUserId);
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (!currentUserId) {
-  //     navigate('/login');
-  //   }
-  // }, [currentUserId, navigate]);
-
   useEffect(() => {
     if (auth.currentUserId) {
       const currentUser = auth.users.find((u) => u.id === auth.currentUserId);
