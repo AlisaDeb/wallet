@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import { isCrypto } from '../../utils/formatting';
 
 export const CurrencyAmountInput = ({
@@ -10,6 +11,7 @@ export const CurrencyAmountInput = ({
   currencies = [],
   onFocus,
   currencySymbol,
+  error,
 }) => {
   const handleChange = (e) => {
     let val = e.target.value;
@@ -20,13 +22,21 @@ export const CurrencyAmountInput = ({
       setAmount(val);
     }
   };
+
   return (
     <div>
       {' '}
       <label className="block text-sm font-medium text-grey-700 mb-1">
         {label}
       </label>
-      <div className="relative flex w-full rounded-lg overflow-hidden border border-gray-300 focus-within:ring-2 focus-within:ring-indigo-500">
+      <div
+        className={clsx(
+          'relative flex w-full rounded-lg overflow-hidden border',
+          error
+            ? 'border-red-600  focus-within:ring-red-600 focus-within:ring-1'
+            : ' border-gray-300  focus-within:ring-indigo-500 focus-within:ring-2'
+        )}
+      >
         {currencySymbol && (
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <span className="text-gray-500 sm:text-sm">{currencySymbol}</span>
@@ -55,6 +65,9 @@ export const CurrencyAmountInput = ({
           ))}
         </select>
       </div>
+      {error && (
+        <p className="text-sm text-red-600 mt-1">Balance too low to proceed</p>
+      )}
     </div>
   );
 };

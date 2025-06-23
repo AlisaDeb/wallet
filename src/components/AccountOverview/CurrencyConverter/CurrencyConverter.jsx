@@ -71,6 +71,9 @@ export const CurrencyConverter = () => {
     }
   }, [fromAmount, toAmount, fromCurrency, toCurrency, activeInput, rates]);
 
+  const isNotEnough =
+    parseFloat(fromAmount) > balance[fromCurrency.toLowerCase()];
+
   const handleSwap = () => {
     setFromAmount(toAmount);
     setToAmount(fromAmount);
@@ -143,6 +146,7 @@ export const CurrencyConverter = () => {
           }}
           setCurrency={setFromCurrency}
           onFocus={() => setActiveInput('from')}
+          error={isNotEnough}
         />
         <div className="grid justify-center">
           <button
