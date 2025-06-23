@@ -10,6 +10,7 @@ export const CurrencyInputBlock = ({
   setAmount,
   setCurrency,
   onFocus,
+  error,
 }) => {
   return (
     <>
@@ -23,6 +24,7 @@ export const CurrencyInputBlock = ({
           setCurrency={setCurrency}
           currencies={currencies}
           onFocus={onFocus}
+          error={error}
         />
       </div>
     </>
