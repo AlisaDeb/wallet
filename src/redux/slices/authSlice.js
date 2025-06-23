@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
   users: [],
@@ -21,7 +22,7 @@ const authSlice = createSlice({
 
       const nowISO = new Date().toISOString();
       const newUser = {
-        id: crypto.randomUUID(),
+        id: uuidv4(),
         name,
         email,
         password,
