@@ -3,9 +3,10 @@ import walletReducer, {
   setSelectedCurrency,
   topUpBalance,
 } from './walletSlice';
+import { describe, it } from 'vitest';
 
 describe('walletSlice - toUpBalance', () => {
-  it('Должен увеличить баланс USD на 100', () => {
+  it('Should increase USD balance by 100', () => {
     const initialState = {
       balance: {
         usd: 0,
@@ -29,7 +30,7 @@ describe('walletSlice - toUpBalance', () => {
     expect(state.transactions[0].type).toBe('credit');
   });
 
-  it('Должен менять selectedCurrency', () => {
+  it('Should update selectedCurrency', () => {
     const initialState = {
       balance: {},
       selectedCurrency: 'USD',
