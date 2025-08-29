@@ -4,7 +4,6 @@ import { AccountOverview } from '../../components/AccountOverview/AccountOvervie
 import { TotalBalance } from '../../components/TotalBalance/TotalBalance';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadWallet } from '../../redux/slices/walletSlice';
-import { useNavigate } from 'react-router-dom';
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
