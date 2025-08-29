@@ -21,19 +21,24 @@ if (window.location.search && window.location.search[1] === '/') {
   window.history.replaceState(null, null, decoded + window.location.hash);
 }
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <Root />,
+      children: [
+        { index: true, element: <LandingPage /> },
+        {
+          path: 'dashboard',
+          element: <MainPage />,
+        },
+      ],
+    },
+  ],
   {
-    path: '/',
-    element: <Root />,
-    children: [
-      { index: true, element: <LandingPage /> },
-      {
-        path: 'dashboard',
-        element: <MainPage />,
-      },
-    ],
-  },
-]);
+    basename: '/wallet',
+  }
+);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
