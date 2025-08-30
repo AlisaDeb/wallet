@@ -79,7 +79,7 @@ export const LandingPage = () => {
           transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
         >
           <img
-            src="/images/Image.png"
+            src="/wallet/images/Image.png"
             alt="Illustration DigiWallet"
             className="object-contain w-full max-w-[90%] md:max-w-full h-auto md:max-h-[90vh]"
           />

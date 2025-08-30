@@ -34,7 +34,7 @@ export const Header = () => {
         <div className="flex items-center gap-x-1">
           <motion.img
             className="h-10 w-10"
-            src="/images/dollar_11218169.png"
+            src="/wallet/images/dollar_11218169.png"
             alt="Dollar Icon"
             variants={headerIconVariants}
             initial="hidden"
