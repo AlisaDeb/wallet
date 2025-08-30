@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LogIn } from '../auth/LogIn';
 import { SignUp } from '../registration/SignUp';
+import Image from '../../images/Image.png';
 
 export const LandingPage = () => {
   const [showForm, setShowForm] = useState(false);
@@ -79,7 +80,7 @@ export const LandingPage = () => {
           transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
         >
           <img
-            src="/wallet/images/Image.png"
+            src={Image}
             alt="Illustration DigiWallet"
             className="object-contain w-full max-w-[90%] md:max-w-full h-auto md:max-h-[90vh]"
           />

@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { LandingNav } from '../../pages/landing/LandingNav';
 import { LogoutButton } from './components/LogoutButton';
 import { UserInfo } from './components/UserInfo';
+import dollarImg from '../../images/dollar_11218169.png';
 
 const headerIconVariants = {
   hidden: {
@@ -34,7 +35,7 @@ export const Header = () => {
         <div className="flex items-center gap-x-1">
           <motion.img
             className="h-10 w-10"
-            src="/wallet/images/dollar_11218169.png"
+            src={dollarImg}
             alt="Dollar Icon"
             variants={headerIconVariants}
             initial="hidden"
